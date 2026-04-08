@@ -1,19 +1,13 @@
-# Python
 __pycache__/
 *.py[cod]
 
-# Environment
 .env
 
-# Ignore only training data (heavy)
 WeatherModel/
 
-# Notebooks
 *.ipynb
 
-# IDE
 .vscode/
 
-# OS
 .DS_Store
 Thumbs.db
