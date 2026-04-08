@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="Predictive Weather Analysis of India. Predict Weather in India with 98% accuracy.">
+        <meta name="author" content="Trasmonaut">
+        <title>Weather Forecast</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='error.css') }}">
+        <script src="{{ url_for('static', filename='index.js') }}" defer></script>
+        <link rel="icon" href="{{ url_for('static', filename='assets/BaseImages/logo.ico') }}" type="image/x-icon">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Amiko:wght@400;600;700&family=Anuphan:wght@100..700&family=Jura:wght@300..700&display=swap" rel="stylesheet">        
+    </head>
+
+<body>
+    <div class="container hide-on-med-and-down center-align">
+        <div class="row ">
+
+                <img src="{{ url_for('static', filename='assets/BaseImages/error.png')}}" class= "rain-image" loading="lazy" alt="404 Not Found">
+
+                <h1 class = "title">ERROR 500 Internal Server Error </h1>
+                <p class = "subtitle">[{{error_message}}]</p>
+                <p class = "body">Oh uh. You seem to have stumbled upon a server error. Please try again,or contact the developer if the issue persists.</p>
+                <a href = "/" class="return-button btn">Return Home</a>
+                <a href="https://tally.so/r/wbJANe" class="contact btn">Give Feedback</a>
+        </div>
+    </div> 
+    
+    <div class="container hide-on-large-only">
+        <div class="row ">
+            <img src="{{ url_for('static', filename='assets/BaseImages/error.png')}}" class= "rain-image" loading="lazy" alt="404 Not Found">
+
+                <h1 class = "title">ERROR 500 Internal Server Error </h1>
+                <p class = "subtitle">[{{error_message}}]</p>
+                <p class = "body">Oh uh. You seem to have stumbled upon a server error. Please try again,or contact the developer if the issue persists.</p>
+                <a href = "/" class="return-button btn">Return Home</a>
+                <a href="https://tally.so/r/wbJANe" class="contact btn">Give Feedback</a>
+        </div>
+    
+</body>
+</html>

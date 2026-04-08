@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block styles %}
+<style>
+    /* Terms Page - Clean SaaS Design */
+    .terms-page {
+        background: #F3F4F6;
+        min-height: 100vh;
+        padding: 60px 20px;
+    }
+
+    .terms-header {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto 40px auto;
+    }
+
+    .terms-header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 12px;
+    }
+
+    .terms-header p {
+        font-size: 16px;
+        color: #6B7280;
+    }
+
+    .terms-container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .terms-card {
+        background: #FFFFFF;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        transition: transform 0.2s ease;
+    }
+
+    .terms-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .terms-card h2 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 12px;
+    }
+
+    .terms-card p {
+        font-size: 15px;
+        color: #6B7280;
+        line-height: 1.7;
+    }
+
+    /* Fix button container */
+    .try-button {
+        width: 100%;
+        text-align: center;
+        margin: 40px 0 60px;  /* top + bottom spacing */
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .try-button a,
+    .try-button button {
+        display: inline-block;
+        padding: 14px 36px;
+        background: #334155;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        line-height: 1.5;
+    }
+
+    /* Hover polish */
+    .try-button a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="terms-page">
+    <div class="terms-header">
+        <h1>Terms & Conditions</h1>
+        <p>Please read the following information carefully before using the platform.</p>
+    </div>
+
+    <div class="terms-container">
+        <div class="terms-card">
+            <h2>1. Prediction Accuracy</h2>
+            <p>Our predictor may produce inaccurate or incomplete data. Please consult authoritative and official sources for critical or time-sensitive dates. Predictions are based on statistical models and may not account for sudden or unexpected weather events. Exercise caution when planning significant activities based solely on our forecasts.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>2. Data Collection and Usage</h2>
+            <p>We do not actively measure or collect data in real-time. Our predictions rely solely upon historical data, and as such, they may not reflect current or future conditions accurately. Data used in predictions may also include synthetic or extrapolated datasets to fill in missing information.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>3. Time Series Limitations</h2>
+            <p>Time series predictions become increasingly uncertain as the prediction timeframe extends further into the future. Our data is only accurate up to 14th May 2025, and any predictions beyond this date should be treated with caution. The reliability of predictions may decrease rapidly for dates further in the future, especially during volatile weather seasons.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>4. Data Sources and Verification</h2>
+            <p>All data utilized in our predictions is sourced from publicly available historical records. We do not guarantee the accuracy, completeness, or timeliness of data provided by third-party sources. Users should verify data with local meteorological agencies to ensure comprehensive and current information.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>5. Intended Use</h2>
+            <p>This service is designed for informational purposes only and should not be used as the sole basis for critical decision-making, especially in areas such as emergency planning, travel arrangements, or property management. Always cross-reference our predictions with official weather services to mitigate risks associated with potential inaccuracies.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>6. Limitation of Liability</h2>
+            <p>India Weather Predict is not responsible for any financial losses, damages, or inconveniences arising from the use of predictions provided by this service. Users are encouraged to verify all predictions with trusted weather authorities. We disclaim liability for any actions taken based on data provided by our system, particularly in scenarios involving potential harm or risk.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>7. Data Retention and Updates</h2>
+            <p>Data used in predictions is retained only for the duration necessary to provide forecasting services and may not be updated regularly. Users should consult official sources for the most current information. Additionally, data may be archived for analytical purposes, but it is not actively monitored for ongoing accuracy.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>8. Severe Weather Events</h2>
+            <p>Our system is not designed to predict extreme weather events such as hurricanes, tropical storms, or earthquakes. These phenomena are complex and require specialized data and forecasting models beyond the scope of our service. Users should refer to official meteorological and geological authorities for accurate and timely warnings regarding such events. India Weather Predict disclaims any liability for damages, injuries, or losses resulting from reliance on our predictions in the context of severe or catastrophic weather conditions.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>9. User Agreement</h2>
+            <p>By using this service, you acknowledge and agree that the predictions are based on historical data and are inherently limited in accuracy. You accept all risks associated with relying on these predictions. Continued use of our services indicates acceptance of these terms, including the understanding that the predictions are not definitive and may be subject to revision without notice.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>10. Data Science Model – XGBoost</h2>
+            <p>The predictions provided by India Weather Predict are powered by the XGBoost algorithm, a popular and robust machine learning model known for its accuracy and efficiency in handling large datasets. XGBoost is a gradient-boosting framework that combines the strengths of multiple decision trees to improve prediction performance. It is highly effective at handling nonlinear relationships and can efficiently process time-series data, making it suitable for predicting weather patterns based on historical records. While XGBoost enhances the accuracy of predictions, it is still limited by the availability and quality of input data, and users are encouraged to consider this when making decisions based on our forecasts.</p>
+        </div>
+
+        <div class="terms-card">
+            <h2>11. Developed by</h2>
+            <p>This app was originally developed by Lillian Charles, Caleb Ramdath, and Jordhan Courteu as part of our Big Data course project. Caleb Ramdath took this project and rebuilt it from the ground up, and that is what you're seeing here. The goal of this project is to explore and apply machine learning models, such as XGBoost, in real-world scenarios to predict weather patterns and improve data-driven decision-making. The team has worked diligently to build a user-friendly interface and robust backend system to deliver weather predictions based on historical data, ensuring a valuable learning experience for all involved. Any feedback on the app's functionality or performance is greatly appreciated as we continue to improve our model.</p>
+        </div>
+    </div>
+
+    <div class="try-button">
+        <a href="/" class="btn">Try Predictor</a>
+    </div>
+</div>
+{% endblock %}

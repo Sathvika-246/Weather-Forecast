@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(copy *)",
+      "Bash(del *)",
+      "Bash(ren *)",
+      "Bash(powershell *)",
+      "Bash(move *)",
+      "Bash(rd *)",
+      "Bash(taskkill *)",
+      "Bash(timeout *)",
+      "Bash(start *)",
+      "Bash(tasklist)",
+      "Bash(findstr *)",
+      "Bash(netstat *)",
+      "Bash(rmdir *)",
+      "Bash(echo.)",
+      "Bash(running!)",
+      "Bash(echo *)",
+      "Bash(clear *)",
+      "Bash(hard *)",
+      "Bash(dir *)",
+      "Bash(✅)",
+      "Bash(pip install *)",
+      "Bash(pytest *)",
+      "Bash(curl *)"
+    ]
+  },
+  "$version": 3
+}

@@ -1,0 +1,1666 @@
+{% extends "layout.html" %}
+
+{% block styles %}
+<style>
+    /* ===== Subtle Tech Theme - Minimal Grey + Dark UI ===== */
+    :root {
+        --page-bg: #F3F4F6;
+        --navbar: #1F2937;
+        --card-bg: #FFFFFF;
+        --text-primary: #111827;
+        --text-secondary: #6B7280;
+        --accent-muted: #374151;
+        --button: #334155;
+        --button-hover: #1F2937;
+        --border: #E5E7EB;
+        --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        --radius-card: 12px;
+        --radius-small: 8px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--text-primary);
+        background: var(--page-bg);
+        overflow-x: hidden;
+        line-height: 1.6;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--page-bg);
+        padding: 120px 0 80px 0;
+        overflow: visible;
+    }
+
+    .hero .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .weather-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .cloud {
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50px;
+        opacity: 1;
+        filter: drop-shadow(0 10px 25px rgba(0,0,0,0.15));
+    }
+
+    .cloud::before,
+    .cloud::after {
+        content: "";
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50%;
+    }
+
+    .cloud-1 {
+        width: 140px;
+        height: 70px;
+        top: 15%;
+        left: -200px;
+        animation: moveClouds 35s linear infinite;
+    }
+
+    .cloud-1::before {
+        width: 80px;
+        height: 80px;
+        top: -35px;
+        left: 15px;
+    }
+
+    .cloud-1::after {
+        width: 100px;
+        height: 100px;
+        top: -50px;
+        left: 50px;
+    }
+
+    .cloud-2 {
+        width: 180px;
+        height: 80px;
+        top: 25%;
+        left: -250px;
+        animation: moveClouds 50s linear infinite;
+    }
+
+    .cloud-2::before {
+        width: 90px;
+        height: 90px;
+        top: -35px;
+        left: 25px;
+    }
+
+    .cloud-2::after {
+        width: 115px;
+        height: 115px;
+        top: -55px;
+        left: 70px;
+    }
+
+    .cloud-3 {
+        width: 150px;
+        height: 75px;
+        top: 10%;
+        left: -220px;
+        animation: moveClouds 42s linear infinite;
+    }
+
+    .cloud-3::before {
+        width: 85px;
+        height: 85px;
+        top: -40px;
+        left: 18px;
+    }
+
+    .cloud-3::after {
+        width: 105px;
+        height: 105px;
+        top: -50px;
+        left: 60px;
+    }
+
+    @keyframes cloudFloat {
+        0% {
+            transform: translateX(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(100vw);
+            opacity: 0;
+        }
+    }
+
+    @keyframes moveClouds {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(120vw);
+        }
+    }
+
+    .hero-shapes {
+        display: none;
+    }
+
+    .hero .container {
+        max-width: 680px;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        background: var(--accent-muted);
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        border-radius: var(--radius-small);
+        margin-bottom: 24px;
+    }
+
+    .hero-title {
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.2;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-title .highlight {
+        color: var(--accent-muted);
+    }
+
+    .hero-description {
+        font-size: 16px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 40px;
+        max-width: 600px;
+    }
+
+    /* ===== Search Form Card ===== */
+    .search-section {
+        background: var(--card-bg);
+        border-radius: var(--radius-card);
+        padding: 32px;
+        box-shadow: var(--shadow);
+        margin-bottom: 40px;
+    }
+
+    .search-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 28px;
+    }
+
+    .search-title span {
+        color: var(--accent-muted);
+    }
+
+    .search-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .input-group {
+        position: relative;
+        width: 100%;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .input-group .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group .input-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 18px;
+        pointer-events: none;
+    }
+
+    .input-group input,
+    .input-group select {
+        width: 100%;
+        height: 52px;
+        padding: 0 18px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
+        background: var(--card-bg);
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+        outline: none;
+    }
+
+    .input-group input:hover,
+    .input-group select:hover {
+        border-color: var(--accent-muted);
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+        border-color: var(--button);
+    }
+
+    /* Date Picker Fix */
+    .input-group {
+        position: relative !important;
+    }
+
+    .input-group input.datepicker {
+        position: relative;
+        z-index: 1;
+    }
+
+    .picker__container {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        margin-top: 8px !important;
+        z-index: 1000 !important;
+        transform: none !important;
+    }
+
+    .picker__box {
+        border-radius: 8px !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    /* Location Dropdown Fix */
+    .input-group select.browser-default {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        padding-right: 46px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .input-group select.browser-default option {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .btn-predict {
+        background: var(--button);
+        color: white;
+        width: 100%;
+        height: 52px;
+        border-radius: var(--radius-small);
+        border: none;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .btn-predict:hover {
+        background: var(--button-hover);
+    }
+
+    .btn-predict:active {
+        transform: scale(0.98);
+    }
+
+    .btn-predict i {
+        font-size: 18px;
+    }
+
+    /* ===== Stats Section ===== */
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        margin-top: 48px;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .stat-label {
+        font-size: 13px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-top: 6px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 34px;
+        }
+
+        .hero-stats {
+            gap: 32px;
+        }
+
+        .search-section {
+            padding: 28px;
+        }
+
+        .section-title {
+            font-size: 28px;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ===== New Sections ===== */
+    .container,
+    .hero .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* Dropdown Fix */
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    /* Date Picker Fix */
+    .datepicker,
+    #date {
+        position: relative;
+    }
+
+    /* If calendar popup exists */
+    .datepicker-dropdown,
+    .datepicker-modal {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        margin-top: 8px !important;
+    }
+
+    /* VERY IMPORTANT: override bad positioning */
+    .datepicker-modal {
+        top: auto !important;
+        bottom: auto !important;
+    }
+
+    /* Location Dropdown Fix */
+    .browser-default,
+    #location {
+        width: 100%;
+    }
+
+    /* Materialize dropdown fix - show 3-4 items with scroll */
+    .select-dropdown.dropdown-content {
+        max-height: 180px !important;
+        overflow-y: auto !important;
+    }
+
+    /* Testimonial PREMIUM */
+    .testimonial-container {
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    .testimonial-container .card,
+    .testimonial-container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .testimonial-container p {
+        font-size: 16px;
+        color: #374151;
+        font-style: italic;
+    }
+
+    .testimonial-container span {
+        display: block;
+        margin-top: 10px;
+        color: #6B7280;
+    }
+
+    /* animation */
+    .testimonial-container {
+        animation: fadeSlide 0.5s ease;
+    }
+
+    @keyframes fadeSlide {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Weather Background Animation - CARTOON STYLE */
+    .weather-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    /* CARTOON SUN - Bright and Visible */
+    .sun {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 180px;
+        height: 180px;
+        background: radial-gradient(circle, #FCD34D 0%, #FBBF24 50%, #F59E0B 100%);
+        border-radius: 50%;
+        box-shadow: 
+            0 0 60px rgba(252, 211, 77, 0.6),
+            0 0 100px rgba(251, 191, 36, 0.4),
+            0 0 140px rgba(245, 158, 11, 0.3);
+        animation: sunPulse 4s ease-in-out infinite;
+        opacity: 1;
+    }
+
+    /* Sun Rays */
+    .sun::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 260px;
+        height: 260px;
+        background: conic-gradient(
+            from 0deg,
+            #FCD34D 0deg,
+            transparent 15deg,
+            #FCD34D 30deg,
+            transparent 45deg,
+            #FCD34D 60deg,
+            transparent 75deg,
+            #FCD34D 90deg,
+            transparent 105deg,
+            #FCD34D 120deg,
+            transparent 135deg,
+            #FCD34D 150deg,
+            transparent 165deg,
+            #FCD34D 180deg,
+            transparent 195deg,
+            #FCD34D 210deg,
+            transparent 225deg,
+            #FCD34D 240deg,
+            transparent 255deg,
+            #FCD34D 270deg,
+            transparent 285deg,
+            #FCD34D 300deg,
+            transparent 315deg,
+            #FCD34D 330deg,
+            transparent 345deg,
+            #FCD34D 360deg
+        );
+        border-radius: 50%;
+        opacity: 0.4;
+        animation: sunRaysRotate 20s linear infinite;
+    }
+
+    @keyframes sunPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 
+                0 0 60px rgba(252, 211, 77, 0.6),
+                0 0 100px rgba(251, 191, 36, 0.4),
+                0 0 140px rgba(245, 158, 11, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 80px rgba(252, 211, 77, 0.8),
+                0 0 120px rgba(251, 191, 36, 0.6),
+                0 0 160px rgba(245, 158, 11, 0.4);
+        }
+    }
+
+    @keyframes sunRaysRotate {
+        from {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+
+    /* CARTOON CLOUDS - Natural Look (Matching Result Page) */
+    .cloud {
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50px;
+        opacity: 1;
+        filter: drop-shadow(0 10px 25px rgba(0,0,0,0.15));
+    }
+
+    /* Fix pseudo elements (VERY IMPORTANT) */
+    .cloud::before,
+    .cloud::after {
+        content: "";
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50%;
+    }
+
+    /* Main cloud shapes */
+    .cloud1 {
+        width: 140px;
+        height: 70px;
+        top: 80px;
+        left: -200px;
+        animation: moveClouds 35s linear infinite;
+    }
+
+    .cloud1::before {
+        width: 80px;
+        height: 80px;
+        top: -35px;
+        left: 15px;
+    }
+
+    .cloud1::after {
+        width: 100px;
+        height: 100px;
+        top: -50px;
+        left: 50px;
+    }
+
+    .cloud2 {
+        width: 180px;
+        height: 80px;
+        top: 140px;
+        left: -250px;
+        animation: moveClouds 50s linear infinite;
+    }
+
+    .cloud2::before {
+        width: 90px;
+        height: 90px;
+        top: -35px;
+        left: 25px;
+    }
+
+    .cloud2::after {
+        width: 115px;
+        height: 115px;
+        top: -55px;
+        left: 70px;
+    }
+
+    .cloud3 {
+        width: 150px;
+        height: 75px;
+        top: 200px;
+        left: -220px;
+        animation: moveClouds 42s linear infinite;
+    }
+
+    .cloud3::before {
+        width: 85px;
+        height: 85px;
+        top: -40px;
+        left: 18px;
+    }
+
+    .cloud3::after {
+        width: 105px;
+        height: 105px;
+        top: -50px;
+        left: 60px;
+    }
+
+    @keyframes moveClouds {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(120vw);
+        }
+    }
+
+    /* Features Section */
+    .section-features {
+        padding: 100px 5%;
+        background: var(--card-bg);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: var(--card-bg);
+        border-radius: var(--radius-card);
+        padding: 20px;
+        text-align: center;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border-color: var(--accent-muted);
+    }
+
+    .feature-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 14px;
+        background: var(--page-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+    }
+
+    .feature-card h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+
+    .feature-card p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+    }
+
+    /* Technology Section */
+    .section-technology {
+        padding: 100px 5%;
+        background: var(--page-bg);
+    }
+
+    .tech-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1000px;
+        margin: 0 auto;
+        align-items: center;
+    }
+
+    .tech-content h3 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+    }
+
+    .tech-content p {
+        font-size: 16px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
+    .tech-flow {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .tech-step {
+        background: var(--card-bg);
+        border-radius: var(--radius-card);
+        padding: 20px;
+        text-align: center;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        transition: all 0.3s ease;
+    }
+
+    .tech-step:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border-color: var(--accent-muted);
+    }
+
+    .tech-step .tech-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 12px;
+        background: var(--page-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+    }
+
+    .tech-step h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+    }
+
+    .tech-step p {
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+
+    .tech-arrow {
+        font-size: 20px;
+        color: var(--text-secondary);
+        text-align: center;
+        margin: -8px 0;
+    }
+
+    /* Weather Animations */
+    .weather-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .cloud {
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50px;
+        opacity: 1;
+        filter: drop-shadow(0 10px 25px rgba(0,0,0,0.15));
+    }
+
+    .cloud::before,
+    .cloud::after {
+        content: "";
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50%;
+    }
+
+    .cloud-1 {
+        width: 140px;
+        height: 70px;
+        top: 15%;
+        left: -200px;
+        animation: moveClouds 35s linear infinite;
+    }
+
+    .cloud-1::before {
+        width: 80px;
+        height: 80px;
+        top: -35px;
+        left: 15px;
+    }
+
+    .cloud-1::after {
+        width: 100px;
+        height: 100px;
+        top: -50px;
+        left: 50px;
+    }
+
+    .cloud-2 {
+        width: 180px;
+        height: 80px;
+        top: 25%;
+        left: -250px;
+        animation: moveClouds 50s linear infinite;
+    }
+
+    .cloud-2::before {
+        width: 90px;
+        height: 90px;
+        top: -35px;
+        left: 25px;
+    }
+
+    .cloud-2::after {
+        width: 115px;
+        height: 115px;
+        top: -55px;
+        left: 70px;
+    }
+
+    .cloud-3 {
+        width: 150px;
+        height: 75px;
+        top: 10%;
+        left: -220px;
+        animation: moveClouds 42s linear infinite;
+    }
+
+    .cloud-3::before {
+        width: 85px;
+        height: 85px;
+        top: -40px;
+        left: 18px;
+    }
+
+    .cloud-3::after {
+        width: 105px;
+        height: 105px;
+        top: -50px;
+        left: 60px;
+    }
+
+    @keyframes cloudFloat {
+        0% {
+            transform: translateX(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(100vw);
+            opacity: 0;
+        }
+    }
+
+    @keyframes moveClouds {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(120vw);
+        }
+    }
+
+    /* Testimonials Section */
+    .section-testimonials {
+        padding: 100px 5%;
+        background: var(--card-bg);
+    }
+
+    .testimonials-slider {
+        position: relative;
+        max-width: 700px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .testimonials-track {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .testimonial-card {
+        min-width: 100%;
+        background: #FFFFFF;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        border: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .testimonial-card.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .testimonial-text {
+        font-size: 20px;
+        font-style: italic;
+        color: var(--text-primary);
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+        font-size: 15px;
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 18px;
+        color: var(--text-primary);
+        z-index: 10;
+    }
+
+    .slider-btn:hover {
+        background: var(--button);
+        color: white;
+        border-color: var(--button);
+    }
+
+    .prev-btn {
+        left: 0;
+    }
+
+    .next-btn {
+        right: 0;
+    }
+
+    /* Animation */
+    .animate-in {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ===== Additional Weather Effects for Home Page ===== */
+    .rain-container-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        pointer-events: none;
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .rain-container-hero.active {
+        opacity: 1;
+    }
+
+    .raindrop-hero {
+        position: absolute;
+        width: 1px;
+        background: linear-gradient(to bottom,
+            rgba(70, 130, 210, 0) 0%,
+            rgba(60, 120, 200, 0.55) 15%,
+            rgba(50, 105, 185, 0.7) 100%
+        );
+        border-radius: 1px;
+        opacity: 0;
+    }
+
+    @keyframes rainFallHero {
+        0% {
+            transform: translateY(0) rotate(12deg);
+            opacity: 0;
+        }
+        5% {
+            opacity: 0.75;
+        }
+        95% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(280px) rotate(12deg);
+            opacity: 0;
+        }
+    }
+
+    .wind-container-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        pointer-events: none;
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .wind-container-hero.active {
+        opacity: 1;
+    }
+
+    .wind-line-hero {
+        position: absolute;
+        height: 3px;
+        background: linear-gradient(to right, transparent, #9CA3AF, transparent);
+        border-radius: 2px;
+        animation: windBlowHero linear infinite;
+    }
+
+    @keyframes windBlowHero {
+        0% { transform: translateX(-100px); opacity: 0; }
+        10% { opacity: 0.6; }
+        90% { opacity: 0.6; }
+        100% { transform: translateX(calc(100vw + 100px)); opacity: 0; }
+    }
+
+    .lightning-container-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        pointer-events: none;
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .lightning-container-hero.active {
+        opacity: 1;
+    }
+
+    .lightning-hero {
+        position: absolute;
+        width: 40px;
+        background: none;
+        opacity: 0;
+    }
+
+    @keyframes lightningFlashHero {
+        0% { opacity: 0; }
+        4% { opacity: 1; }
+        8% { opacity: 0.25; }
+        13% { opacity: 0.85; }
+        18% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .stars-container-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        pointer-events: none;
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .stars-container-hero.active {
+        opacity: 1;
+    }
+
+    .star-hero {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #FCD34D;
+        border-radius: 50%;
+        animation: twinkleHero ease-in-out infinite;
+        box-shadow: 0 0 10px rgba(252, 211, 77, 0.8);
+    }
+
+    @keyframes twinkleHero {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .fog-container-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        pointer-events: none;
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .fog-container-hero.active {
+        opacity: 0.5;
+    }
+
+    .fog-hero {
+        position: absolute;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(to right, 
+            transparent 0%, rgba(255,255,255,0.3) 20%, 
+            rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 80%, 
+            transparent 100%
+        );
+        animation: fogDriftHero 20s ease-in-out infinite;
+    }
+
+    @keyframes fogDriftHero {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(-25%); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="weather-bg">
+            <div class="sun"></div>
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+        </div>
+        <!-- Additional Weather Effects Containers -->
+        <div class="rain-container-hero" id="rainContainerHero"></div>
+        <div class="wind-container-hero" id="windContainerHero"></div>
+        <div class="lightning-container-hero" id="lightningContainerHero"></div>
+        <div class="stars-container-hero" id="starsContainerHero"></div>
+        <div class="fog-container-hero" id="fogContainerHero">
+            <div class="fog-hero"></div>
+        </div>
+
+        <div class="container">
+            <span class="hero-badge">🌤️ Advanced Weather Forecasting</span>
+            <h1 class="hero-title">Weather <span class="highlight">Forecast</span></h1>
+            <p class="hero-description">
+                Experience the future of weather prediction with our advanced platform. 
+                Get highly accurate forecasts for 12 major Indian cities using cutting-edge machine learning 
+                technology trained on 25+ years of historical weather data. Plan your day with confidence!
+            </p>
+            
+            <!-- Search Form - Stacked Design -->
+            <div class="search-section">
+                <h2 class="search-title">Get Your <span>Weather Forecast</span></h2>
+                <form id="weatherForm" class="search-form" action="/get_result" method="GET">
+                    <!-- Date Input -->
+                    <div class="input-group">
+                        <label for="date">📅 Select Date</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="datepicker" id="date" name="date" required placeholder="Choose a date" style="padding-left: 18px; padding-right: 55px;">
+                            <i class="material-icons input-icon" style="left: auto; right: 18px;">event</i>
+                        </div>
+                    </div>
+
+                    <!-- Location Dropdown -->
+                    <div class="input-group">
+                        <label for="location">📍 Select Location</label>
+                        <select name="location" id="location" required onchange="updateLocationDisplay(this)" style="
+                            width: 100%;
+                            height: 56px;
+                            padding: 0 18px;
+                            border: 2px solid transparent;
+                            border-bottom: 2px solid var(--gray-200);
+                            border-radius: 12px;
+                            background: var(--sky-50);
+                            font-size: 15px;
+                            font-weight: 500;
+                            color: var(--gray-700);
+                            cursor: pointer;
+                            outline: none;
+                        "
+                        onmouseover="this.style.background='white'; this.style.borderColor='var(--sky-600)';"
+                        onmouseout="this.style.background='var(--sky-50)'; this.style.borderColor='transparent';">
+                            <option value="" disabled selected>Choose a city</option>
+                            <option value="0">Ahmedabad</option>
+                            <option value="1">Bangalore</option>
+                            <option value="2">Chennai</option>
+                            <option value="3">Delhi</option>
+                            <option value="4">Hyderabad</option>
+                            <option value="5">Jaipur</option>
+                            <option value="6">Kanpur</option>
+                            <option value="7">Kolkata</option>
+                            <option value="8">Lucknow</option>
+                            <option value="9">Mumbai</option>
+                            <option value="10">Nagpur</option>
+                            <option value="11">Pune</option>
+                        </select>
+                    </div>
+
+                    <!-- Predict Button -->
+                    <button type="submit" class="btn-predict">
+                        <i class="material-icons">search</i>
+                        <span>Predict Weather</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Stats -->
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Cities</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Years Data</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">7-Day</span>
+                    <span class="stat-label">Forecasts</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="about" class="section-features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">About</span>
+                <h2 class="section-title">About Our Platform</h2>
+                <p class="section-subtitle">Advanced weather prediction powered by machine learning</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Advanced models trained on historical data</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>High Accuracy</h3>
+                    <p>Accurate predictions using trained ML models</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏙️</div>
+                    <h3>12 Cities</h3>
+                    <p>Supports major Indian cities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Fast prediction generation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section-technology">
+        <div class="tech-container">
+            <div class="tech-content">
+                <h3>How Our Model Works</h3>
+                <p>Our weather prediction system uses advanced XGBoost machine learning models trained on 25+ years of historical weather data. The model analyzes patterns and relationships in the data to generate accurate 7-day weather forecasts for 12 major Indian cities.</p>
+            </div>
+            <div class="tech-flow">
+                <div class="tech-step">
+                    <div class="tech-icon">📅</div>
+                    <h4>Input</h4>
+                    <p>Date & Location</p>
+                </div>
+                <div class="tech-arrow">↓</div>
+                <div class="tech-step">
+                    <div class="tech-icon">⚙️</div>
+                    <h4>Processing</h4>
+                    <p>Feature Extraction</p>
+                </div>
+                <div class="tech-arrow">↓</div>
+                <div class="tech-step">
+                    <div class="tech-icon">🤖</div>
+                    <h4>ML Model</h4>
+                    <p>XGBoost Prediction</p>
+                </div>
+                <div class="tech-arrow">↓</div>
+                <div class="tech-step">
+                    <div class="tech-icon">📊</div>
+                    <h4>Output</h4>
+                    <p>Weather Forecast</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-testimonials">
+        <div class="testimonial-container">
+            <div class="section-header">
+                <span class="section-badge">Testimonials</span>
+                <h2 class="section-title">What People Say</h2>
+                <p class="section-subtitle">Feedback from our users</p>
+            </div>
+            <div class="testimonials-slider">
+                <button class="slider-btn prev-btn" onclick="moveTestimonial(-1)">❮</button>
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-card fade-slide">
+                        <p class="testimonial-text">"Very accurate predictions. Helped me plan travel!"</p>
+                        <p class="testimonial-author">– Student</p>
+                    </div>
+                    <div class="testimonial-card fade-slide">
+                        <p class="testimonial-text">"Clean UI and fast results."</p>
+                        <p class="testimonial-author">– Developer</p>
+                    </div>
+                    <div class="testimonial-card fade-slide">
+                        <p class="testimonial-text">"Great use of machine learning."</p>
+                        <p class="testimonial-author">– Professor</p>
+                    </div>
+                    <div class="testimonial-card fade-slide">
+                        <p class="testimonial-text">"Simple and effective tool."</p>
+                        <p class="testimonial-author">– User</p>
+                    </div>
+                    <div class="testimonial-card fade-slide">
+                        <p class="testimonial-text">"Impressive project quality."</p>
+                        <p class="testimonial-author">– Reviewer</p>
+                    </div>
+                </div>
+                <button class="slider-btn next-btn" onclick="moveTestimonial(1)">❯</button>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Update location display
+    function updateLocationDisplay(selectElement) {
+        if (selectElement.value) {
+            selectElement.style.color = 'var(--gray-900)';
+            selectElement.style.fontWeight = '600';
+        }
+    }
+
+    // Animate on scroll for cards
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .step-card, .testimonial-card').forEach(el => observer.observe(el));
+
+    // Testimonials Slider
+    let currentTestimonial = 0;
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    const track = document.getElementById('testimonialsTrack');
+
+    // Set initial active testimonial
+    if (testimonials.length > 0) {
+        testimonials[0].classList.add('active');
+    }
+
+    function moveTestimonial(direction) {
+        // Remove active class from current
+        testimonials[currentTestimonial].classList.remove('active');
+        
+        currentTestimonial += direction;
+
+        if (currentTestimonial < 0) {
+            currentTestimonial = testimonials.length - 1;
+        } else if (currentTestimonial >= testimonials.length) {
+            currentTestimonial = 0;
+        }
+
+        // Add active class to new testimonial
+        testimonials[currentTestimonial].classList.add('active');
+
+        track.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+    }
+
+    // Auto-advance testimonials every 5 seconds
+    setInterval(() => {
+        moveTestimonial(1);
+    }, 5000);
+
+    // Initialize Materialize select dropdown
+    document.addEventListener('DOMContentLoaded', function() {
+        var locationSelect = document.getElementById('location');
+        if (locationSelect) {
+            M.FormSelect.init(locationSelect);
+        }
+    });
+
+    // ===== Weather Effects Loop for Home Page =====
+    function createRainDropsHero(count) {
+        const container = document.getElementById('rainContainerHero');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'raindrop-hero';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.top = (Math.random() * 150 - 50) + 'px';
+            drop.style.height = (Math.random() * 8 + 6) + 'px';
+
+            const duration = Math.random() * 0.3 + 0.4;
+            drop.style.animation = `rainFallHero ${duration}s linear ${-(Math.random() * duration)}s infinite`;
+            container.appendChild(drop);
+        }
+    }
+
+    function createWindLinesHero(count) {
+        const container = document.getElementById('windContainerHero');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const line = document.createElement('div');
+            line.className = 'wind-line-hero';
+            line.style.top = (Math.random() * 80 + 10) + '%';
+            line.style.width = (Math.random() * 150 + 100) + 'px';
+            line.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            line.style.animationDelay = Math.random() * 3 + 's';
+            container.appendChild(line);
+        }
+    }
+
+    function createLightningHero(count) {
+        const container = document.getElementById('lightningContainerHero');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const bolt = document.createElement('div');
+            bolt.className = 'lightning-hero';
+            
+            const segments = Math.floor(Math.random() * 4) + 5;
+            const startX = Math.random() * 20 - 10;
+            const height = Math.random() * 120 + 80;
+            const width = 30;
+            
+            let zigzagPath = `M ${width/2} 0`;
+            let currentY = 0;
+            const segmentHeight = height / segments;
+            
+            for (let j = 0; j < segments; j++) {
+                currentY += segmentHeight;
+                const xOffset = (j % 2 === 0) ? -startX : startX;
+                zigzagPath += ` L ${width/2 + xOffset} ${currentY}`;
+            }
+            
+            bolt.style.left = (Math.random() * 60 + 20) + '%';
+            bolt.style.top = (Math.random() * 60 + 20) + 'px';
+            bolt.style.width = width + 'px';
+            bolt.style.height = height + 'px';
+            bolt.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}'%3E%3Cpolyline points='${width/2},0 ${width/2-12},${height*0.18} ${width/2+10},${height*0.32} ${width/2-8},${height*0.48} ${width/2+12},${height*0.62} ${width/2-6},${height*0.78} ${width/2+4},${height}' stroke='%23FFF5A0' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='${width/2},0 ${width/2-12},${height*0.18} ${width/2+10},${height*0.32} ${width/2-8},${height*0.48} ${width/2+12},${height*0.62} ${width/2-6},${height*0.78} ${width/2+4},${height}' stroke='%23FFFFE0' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`;
+            bolt.style.backgroundSize = 'contain';
+            bolt.style.backgroundRepeat = 'no-repeat';
+            bolt.style.boxShadow = '0 0 10px rgba(255,245,160,0.6), 0 0 20px rgba(255,245,160,0.3)';
+            
+            const delay = Math.random() * 4 + 3;
+            bolt.style.animation = `lightningFlashHero 1.5s ease-out ${delay}s infinite`;
+            container.appendChild(bolt);
+        }
+    }
+
+    function createStarsHero(count) {
+        const container = document.getElementById('starsContainerHero');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const star = document.createElement('div');
+            star.className = 'star-hero';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 60 + '%';
+            star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            container.appendChild(star);
+        }
+    }
+
+    // Cycle through weather effects in a loop
+    let currentWeatherEffect = 0;
+    const effectCycle = [
+        { name: 'clear', duration: 10000 },
+        { name: 'rainy', duration: 12000 },
+        { name: 'windy', duration: 10000 },
+        { name: 'stormy', duration: 15000 },
+        { name: 'foggy', duration: 10000 },
+        { name: 'starry', duration: 10000 }
+    ];
+
+    function activateWeatherEffectHero(effectName) {
+        // Reset all
+        document.getElementById('rainContainerHero').classList.remove('active');
+        document.getElementById('windContainerHero').classList.remove('active');
+        document.getElementById('lightningContainerHero').classList.remove('active');
+        document.getElementById('starsContainerHero').classList.remove('active');
+        document.getElementById('fogContainerHero').classList.remove('active');
+
+        switch(effectName) {
+            case 'clear':
+                // Just sun and clouds (already present)
+                break;
+            case 'rainy':
+                createRainDropsHero(60);
+                document.getElementById('rainContainerHero').classList.add('active');
+                break;
+            case 'windy':
+                createWindLinesHero(15);
+                document.getElementById('windContainerHero').classList.add('active');
+                break;
+            case 'stormy':
+                createRainDropsHero(90);
+                createLightningHero(4);
+                document.getElementById('rainContainerHero').classList.add('active');
+                document.getElementById('lightningContainerHero').classList.add('active');
+                break;
+            case 'foggy':
+                document.getElementById('fogContainerHero').classList.add('active');
+                break;
+            case 'starry':
+                createStarsHero(40);
+                document.getElementById('starsContainerHero').classList.add('active');
+                break;
+        }
+    }
+
+    function cycleWeatherEffectsHero() {
+        const effect = effectCycle[currentWeatherEffect];
+        activateWeatherEffectHero(effect.name);
+        
+        currentWeatherEffect = (currentWeatherEffect + 1) % effectCycle.length;
+        
+        setTimeout(cycleWeatherEffectsHero, effect.duration);
+    }
+
+    // Start the weather effect cycle after a short delay
+    setTimeout(() => {
+        cycleWeatherEffectsHero();
+    }, 2000);
+</script>
+{% endblock %}

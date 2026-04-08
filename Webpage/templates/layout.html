@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="India's most accurate weather prediction platform. AI-powered forecasts for 12 major cities with 98.77% accuracy.">
+        <meta name="author" content="Weather Forecast Team">
+        <title>Weather Forecast - India's Most Accurate Weather Prediction</title>
+
+        {% block styles %}{% endblock %}
+        <!-- Preconnect to the CDN -->
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Load Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script src="{{ url_for('static', filename='index.js') }}?v=20250101" defer></script>
+        <link rel="icon" href="{{ url_for('static', filename='assets/BaseImages/logo.ico') }}" type="image/x-icon">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Amiko:wght@400;600;700&family=Anuphan:wght@100..700&family=Jura:wght@300..700&display=swap" rel="stylesheet">        
+    </head>
+<body>
+   
+
+    <!--Nav Section-->
+    <div class="navbar-fixed">
+    <nav style="background: #1F2937 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div class="nav-wrapper" style="background: #1F2937;">
+        <a href="/"  class="title" style="font-size: 20px !important; font-weight: 700 !important; color: white; margin-left: 20px;">Weather Forecast</a>
+        <a href="/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons" style="color: #9CA3AF;">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down ">
+
+                <li><a href="/#about" class="nav-headings nav-main-buttons btn" style="background: transparent; color: #D1D5DB; font-weight: 500; margin: 0 8px;">About</a></li>
+                <li><a href="/#technology" class="nav-headings nav-main-buttons btn" style="background: transparent; color: #D1D5DB; font-weight: 500; margin: 0 8px;">Technology</a></li>
+                <li><a href="/terms-and-conditions" class="nav-headings nav-main-buttons btn" style="background: transparent; color: #D1D5DB; font-weight: 500; margin: 0 8px;">Terms</a></li>
+                <li><a href = "/" class="nav-headings nav-action-button btn" style="background: #334155; color: white; margin: 0 8px;">Try Now</a></li>
+
+        </ul>
+        </div>
+    </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/index#explore" class="nav-headings nav-main-buttons btn">How It Works</a></li>
+        <li><a href="/index#visualizations" class="nav-headings nav-main-buttons btn">Visualizations</a></li>
+        <li><a href="/terms-and-conditions" class="nav-headings nav-main-buttons btn">Terms and Conditions</a></li>
+        <li><a  href = "/" class="nav-headings nav-action-button btn">Try Predictor</a></li>
+
+    </ul>
+    <!--End Nav Section-->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+        <div class="card-panel red lighten-2 white-text error" style="margin-top: 20px;">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+    <!-- Main Content -->
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+ <!--Footer Section-->
+    <footer style="background: #1F2937; color: #9CA3AF; padding: 48px 5%; border-top: 1px solid #374151;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto;">
+            <div>
+                <h3 style="color: white; font-size: 18px; font-weight: 700; margin-bottom: 14px;">🌤️ Weather Forecast</h3>
+                <p style="line-height: 1.7; max-width: 350px; font-size: 14px;">Advanced weather prediction for India. Delivering highly accurate forecasts for 12 major cities using XGBoost machine learning technology.</p>
+            </div>
+            <div>
+                <h4 style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 14px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;"><a href="/#about" style="color: #9CA3AF; text-decoration: none; font-size: 14px;">About</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/terms-and-conditions" style="color: #9CA3AF; text-decoration: none; font-size: 14px;">Terms & Conditions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/" style="color: #9CA3AF; text-decoration: none; font-size: 14px;">Try Predictor</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 14px;">Covered Cities</h4>
+                <p style="line-height: 1.7; font-size: 14px;">Delhi, Mumbai, Bangalore<br>Chennai, Hyderabad, Pune<br>Kolkata, Jaipur, +5 More</p>
+                <p style="margin-top: 18px; font-size: 13px; color: #6B7280;">© 2025 Weather Forecast</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    {% block scripts %}{% endblock %}
+
+
+</body>
+</html>
